@@ -21,6 +21,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Badge from "@material-ui/core/Badge";
 import Tooltip from "@material-ui/core/Tooltip";
 import fetchAPI from "./modules/fetchAPI";
+import "./loader.css";
 
 import {
   createTheme,
@@ -225,11 +226,18 @@ export default function App(props) {
 		getData();
 	}, []);
 	
-	return (
-	<ThemeProvider theme={theme}>
-	  <Box bgcolor="background" padding={4} height="80vh">
-		  <Node o={organization} />
-	  </Box>
-	</ThemeProvider>
-	);
+	if (Object.keys(organization).length === 0) {
+		return (
+			<div className="loader"></div>
+		)
+	}
+	else {
+		return (
+			<ThemeProvider theme={theme}>
+			  <Box bgcolor="background" padding={4} height="80vh">
+				  <Node o={organization} />
+			  </Box>
+			</ThemeProvider>
+		);
+	}
 }
