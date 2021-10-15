@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 import { Tree, TreeNode } from "react-organizational-chart";
 import _ from "lodash";
@@ -20,7 +20,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import Badge from "@material-ui/core/Badge";
 import Tooltip from "@material-ui/core/Tooltip";
-import organization from "./data.json";
+import fetchAPI from "./modules/fetchAPI";
 
 import {
   createTheme,
@@ -198,12 +198,12 @@ function Node({ o, parent }) {
       }
     >
       {_.map(o.account, (a) => (
-        <TreeNode key={Math.random() * 20000} label={<Account a={a} />}>
+        <TreeNode key={Math.random() * 200000} label={<Account a={a} />}>
           <TreeNode label={<Product p={a.product} />} />
         </TreeNode>
       ))}
       {_.map(o.organizationChildRelationship, (c) => (
-        <Node key={Math.random() * 20000} o={c} parent={o} />
+        <Node key={Math.random() * 200000} o={c} parent={o} />
       ))}
     </T>
   );
@@ -216,11 +216,20 @@ const theme = createTheme({
 });
 
 export default function App(props) {
-  return (
-    <ThemeProvider theme={theme}>
-      <Box bgcolor="background" padding={4} height="80vh">
-          <Node o={organization} />
-      </Box>
-    </ThemeProvider>
-  );
+	const [ organization, setOrganization ] = useState({});
+	useEffect(() => {
+		const getData = async () => {
+			const data = await fetchAPI("https://testsm1-developer-edition.ap15.force.com/widgettest/services/apexrest/orgchart/");
+			setOrganization(data);
+		}
+		getData();
+	}, []);
+	
+	return (
+	<ThemeProvider theme={theme}>
+	  <Box bgcolor="background" padding={4} height="80vh">
+		  <Node o={organization} />
+	  </Box>
+	</ThemeProvider>
+	);
 }
