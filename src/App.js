@@ -23,7 +23,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import organization from "./data.json";
 
 import {
-  createMuiTheme,
+  createTheme,
   makeStyles,
   ThemeProvider,
 } from "@material-ui/core/styles";
@@ -83,7 +83,7 @@ function Organization({ org, onCollapse, collapsed }) {
               }}
               showZero
               invisible={!collapsed}
-              overlap="circle"
+              overlap="circular"
               badgeContent={_.size(org.organizationChildRelationship)}
               onClick={onCollapse}
             >
@@ -198,17 +198,17 @@ function Node({ o, parent }) {
       }
     >
       {_.map(o.account, (a) => (
-        <TreeNode label={<Account a={a} />}>
+        <TreeNode key={Math.random() * 20000} label={<Account a={a} />}>
           <TreeNode label={<Product p={a.product} />} />
         </TreeNode>
       ))}
       {_.map(o.organizationChildRelationship, (c) => (
-        <Node o={c} parent={o} />
+        <Node key={Math.random() * 20000} o={c} parent={o} />
       ))}
     </T>
   );
 }
-const theme = createMuiTheme({
+const theme = createTheme({
   palette: {
     background: "#ECECF4",
   },
