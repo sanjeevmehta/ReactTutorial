@@ -24,6 +24,12 @@ import fetchAPI from "./modules/fetchAPI";
 import "./loader.css";
 
 import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+import {
   createTheme,
   makeStyles,
   ThemeProvider,
@@ -233,11 +239,13 @@ export default function App(props) {
 	}
 	else {
 		return (
-			<ThemeProvider theme={theme}>
-			  <Box bgcolor="background" padding={4} height="80vh">
-				  <Node o={organization} />
-			  </Box>
-			</ThemeProvider>
+      <Router>
+        <ThemeProvider theme={theme}>
+          <Box bgcolor="background" padding={4} height="80vh">
+            <Node o={organization} />
+          </Box>
+        </ThemeProvider>
+      </Router>
 		);
 	}
 }
