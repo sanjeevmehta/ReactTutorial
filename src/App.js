@@ -24,10 +24,7 @@ import fetchAPI from "./modules/fetchAPI";
 import "./loader.css";
 
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
+  BrowserRouter as Router
 } from "react-router-dom";
 import {
   createTheme,
